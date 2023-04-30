@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -8,10 +7,11 @@
 int main(void) {
 	pid_t pid;
 	int cmdnum;
+	char c;
 	char cmd[100], arg[100];
 	while(1) {
-		printf("Kommando? \n");
-		printf("Verfuegbare Kommandos:\n");
+		printf("Command? \n");
+		printf("Available commands:\n");
 		printf("1: ls\n2: ps\n3: cal\n4: exit\n");
 		scanf("%d", &cmdnum);
 		switch(cmdnum) {
@@ -28,7 +28,7 @@ int main(void) {
 				exit(0);
 				break;
 			default:
-				printf("Unzulaessiges Kommando\n");
+				printf("Invalid input\n");
 				continue;
 		}
 
@@ -43,11 +43,11 @@ int main(void) {
 		else if (pid == 0) {
 			if(strcmp(arg, "no") == 0) {
 				execlp(cmd, cmd, NULL, NULL);
-				printf("exec fehlgeschlagen\n");
+				printf("exec failed");
 			}
 			else {
 				execlp(cmd, cmd, arg, NULL);
-				printf("exec fehlgeschlagen\n");
+				printf("exec failed");
 			}
 		}
 	}
