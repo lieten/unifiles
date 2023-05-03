@@ -19,8 +19,7 @@ void FlowDataSource::createData(int time)
 
 float FlowDataSource::getDataValue(int iz, int iy, int ix, int ic)
 {
-    return cartesianDataGrid[3*xs*ys*iz + 3*xs*iy + 3*ix + ic]; //TODO: formel ueberdenken
-    //springe zum richtigen z-block, dann y-block, dann x-block, dann Vektorkomponente
+    return cartesianDataGrid[3*xs*ys*iz + 3*xs*iy + 3*ix + ic]; //springe zum richtigen z-block, dann y-block, dann x-block, dann Vektorkomponente
 }
 
 /* Beispeilarray: 2*2*2*3
@@ -31,7 +30,11 @@ float FlowDataSource::getDataValue(int iz, int iy, int ix, int ic)
  */
 void FlowDataSource::printValuesOfHorizontalSlice(int z, int c)
 {
-
+    for(int y = 0; y < ys; y++) {
+        for(int x = 0; x < xs; x++) {
+            cout << getDataValue(z, y, x, c) << " ";
+        }
+    }
 }
 
 /*
@@ -93,9 +96,10 @@ void FlowDataSource::gen_tornado(int xs, int ys, int zs, int time, float *tornad
                temp = sqrt( temp*temp + z0*z0 );
                 scale = (r + r2 - temp) * scale / (temp + SMALL);
                 scale = scale / (1+z);
-               *tornado++ = scale * (y-yc) + 0.1*(x-xc); //*tornado++ = ... heisst effektiv: der naechste Eintrag im Array wird ueberschrieben
-               *tornado++ = scale * -(x-xc) + 0.1*(y-yc);
-               *tornado++ = scale * z0;
+               //*tornado++ = ... heisst effektiv: der naechste Eintrag im Array wird ueberschrieben
+               *tornado++ = scale * (y-yc) + 0.1*(x-xc); //ic=0  x-Komponente des Vektors
+               *tornado++ = scale * -(x-xc) + 0.1*(y-yc); //ic=1  y-Komponente des Vektors
+               *tornado++ = scale * z0; //ic=2  x-Komponente des Vektors
             }
          }
       }

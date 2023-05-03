@@ -6,8 +6,9 @@ using namespace std;
 int main()
 {
     //cout << "Hello World!\n";
-    FlowDataSource test (10, 10, 10);
-    test.createData(0);
+    FlowDataSource test (16, 16, 16);
+    test.createData(1);
+    /*
     cout << test.getDataValue(3, 3, 3, 0) << "\n";
     cout << test.getDataValue(3, 3, 3, 1) << "\n";
     cout << test.getDataValue(3, 3, 3, 2) << "\n";
@@ -15,4 +16,6 @@ int main()
     cout << test.getDataValue(3, 3, 4, 0) << "\n";
     cout << test.getDataValue(3, 3, 4, 1) << "\n";
     cout << test.getDataValue(3, 3, 4, 2) << "\n";
+    */
+    test.printValuesOfHorizontalSlice(10, 0);
 }
