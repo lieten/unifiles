@@ -4,6 +4,9 @@
 #include <QOpenGLFunctions>
 #include <iostream>
 #include "math.h"
+#include "flowdatasource.h"
+#include "horizontalslicetoimagemapper.h"
+#include "horizontalslicerenderer.h"
 
 
 OpenGLDisplayWidget::OpenGLDisplayWidget(QWidget *parent)
@@ -183,11 +186,14 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     // Initialize data source(s).
     // ....
+    FlowDataSource source (16, 16, 16);
 
     // Initialize mapper modules.
     // ....
+    HorizontalSliceToImageMapper mapper;
 
     // Initialize rendering modules.
     bboxRenderer = new DataVolumeBoundingBoxRenderer();
     // ....
+    HorizontalSliceRenderer renderer;
 }

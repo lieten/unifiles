@@ -24,12 +24,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    flowdatasource.cpp \
+    horizontalslicerenderer.cpp \
+    horizontalslicetoimagemapper.cpp \
     main.cpp \
     mainwindow.cpp \
     opengldisplaywidget.cpp \
-    datavolumeboundingboxrenderer.cpp
+    datavolumeboundingboxrenderer.cpp \
+    tornadoSrc.c
 
 HEADERS += \
+    flowdatasource.h \
+    horizontalslicerenderer.h \
+    horizontalslicetoimagemapper.h \
     mainwindow.h \
     opengldisplaywidget.h \
     datavolumeboundingboxrenderer.h
