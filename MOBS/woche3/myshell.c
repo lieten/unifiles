@@ -27,7 +27,7 @@ int main(void) {
 		//Wenn inputcheck < 1 ist die Eingabe ungueltig/keine Zahl/zu grosse Zahl
 		if(inputcheck < 1) {
 			printf("Invalid input, please try again.\n");
-			//clearInputBuffer(); //Input buffer muss vorher gecleared werden
+			clearInputBuffer(); //Input buffer muss vorher gecleared werden
 			continue; //Wir fangen von Vorne an
 		}
 		//Ablesen der Zahl und korrektes Kommando setzen
