@@ -10,6 +10,8 @@ public:
     HorizontalSliceToImageMapper();
     void setDataSource(FlowDataSource* source);
     QImage mapSliceToImage();
+private:
+    //FlowDataSource source;
 };
 
 #endif // HORIZONTALSLICETOIMAGEMAPPER_H

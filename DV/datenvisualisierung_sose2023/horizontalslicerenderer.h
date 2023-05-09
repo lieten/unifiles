@@ -8,6 +8,7 @@ public:
     HorizontalSliceRenderer();
     void setMapper(HorizontalSliceToImageMapper* mapper);
     void drawImage();
+    HorizontalSliceToImageMapper mapper;
 };
 
 #endif // HORIZONTALSLICERENDERER_H

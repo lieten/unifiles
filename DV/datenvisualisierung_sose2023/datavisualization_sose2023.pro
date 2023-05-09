@@ -42,5 +42,7 @@ HEADERS += \
     datavolumeboundingboxrenderer.h
 
 DISTFILES += \
+    datavisualization_sose2023.pro.user \
     lines_fshader.glsl \
-    lines_vshader.glsl
+    lines_vshader.glsl \
+    uhhlogo.png
