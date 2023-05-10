@@ -72,6 +72,9 @@ OBJECTS       = flowdatasource.o \
 		moc_mainwindow.o \
 		moc_opengldisplaywidget.o
 DIST          = datavisualization_sose2023.pro.user \
+		gradiant.jpg \
+		hslice_fshader.glsl \
+		hslice_vshader.glsl \
 		lines_fshader.glsl \
 		lines_vshader.glsl \
 		uhhlogo.png \
@@ -817,6 +820,9 @@ moc_mainwindow.cpp: mainwindow.h \
 
 moc_opengldisplaywidget.cpp: opengldisplaywidget.h \
 		datavolumeboundingboxrenderer.h \
+		horizontalslicerenderer.h \
+		horizontalslicetoimagemapper.h \
+		flowdatasource.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include /home/lieten/unifiles/DV/datenvisualisierung_sose2023/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/lieten/unifiles/DV/datenvisualisierung_sose2023 -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/13.1.1 -I/usr/include/c++/13.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/13.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/13.1.1/include-fixed -I/usr/include opengldisplaywidget.h -o moc_opengldisplaywidget.cpp
@@ -854,14 +860,17 @@ main.o: main.cpp mainwindow.h
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
 		opengldisplaywidget.h \
-		datavolumeboundingboxrenderer.h
+		datavolumeboundingboxrenderer.h \
+		horizontalslicerenderer.h \
+		horizontalslicetoimagemapper.h \
+		flowdatasource.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 opengldisplaywidget.o: opengldisplaywidget.cpp opengldisplaywidget.h \
 		datavolumeboundingboxrenderer.h \
-		flowdatasource.h \
+		horizontalslicerenderer.h \
 		horizontalslicetoimagemapper.h \
-		horizontalslicerenderer.h
+		flowdatasource.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o opengldisplaywidget.o opengldisplaywidget.cpp
 
 datavolumeboundingboxrenderer.o: datavolumeboundingboxrenderer.cpp datavolumeboundingboxrenderer.h

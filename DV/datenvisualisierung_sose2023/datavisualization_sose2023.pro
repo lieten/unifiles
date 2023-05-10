@@ -44,6 +44,8 @@ HEADERS += \
 DISTFILES += \
     datavisualization_sose2023.pro.user \
     gradiant.jpg \
+    hslice_fshader.glsl \
+    hslice_vshader.glsl \
     lines_fshader.glsl \
     lines_vshader.glsl \
     uhhlogo.png

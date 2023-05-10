@@ -21,7 +21,7 @@ OpenGLDisplayWidget::~OpenGLDisplayWidget()
 {
     // Clean up visualization pipeline.
     delete bboxRenderer;
-    // ....
+    delete sliceRenderer;
 }
 
 
@@ -83,7 +83,7 @@ void OpenGLDisplayWidget::paintGL()
     f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Call renderer modules.
-    //bboxRenderer->drawBoundingBox(mvpMatrix);
+    bboxRenderer->drawBoundingBox(mvpMatrix);
     sliceRenderer->drawImage(mvpMatrix);
 }
 
@@ -206,7 +206,7 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
     mapper.setDataSource(&source);
 
     // Initialize rendering modules.
-    //bboxRenderer = new DataVolumeBoundingBoxRenderer();
+    bboxRenderer = new DataVolumeBoundingBoxRenderer();
     // ....
     sliceRenderer = new HorizontalSliceRenderer();
     sliceRenderer->setMapper(&mapper);

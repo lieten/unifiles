@@ -33,7 +33,7 @@ void HorizontalSliceRenderer::changeWindComponent(int ic) {
 void HorizontalSliceRenderer::initOpenGLShaders()
 {
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                               "lines_vshader.glsl"))
+                                               "hslice_vshader.glsl"))
     {
         std::cout << "Vertex shader error:\n"
                   << shaderProgram.log().toStdString() << "\n" << std::flush;
@@ -41,7 +41,7 @@ void HorizontalSliceRenderer::initOpenGLShaders()
     }
 
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                               "lines_fshader.glsl"))
+                                               "hslice_fshader.glsl"))
     {
         std::cout << "Fragment shader error:\n"
                   << shaderProgram.log().toStdString() << "\n" << std::flush;
@@ -59,7 +59,7 @@ void HorizontalSliceRenderer::initOpenGLShaders()
 void HorizontalSliceRenderer::initGeometry() {
     const unsigned int numVertices = 4;
     float unitCubeVertices[numVertices][3] = {
-        {0, 0, 0}, {1, 0, 0}, {1, 1, 0}, {0, 1, 0},
+        {0.0, 0.0, 0.0}, {1.0, 0.0, 0.0}, {1.0, 1.0, 0.0}, {0.0, 1.0, 0.0}
 };
 
     // Create vertex buffer and upload vertex data to buffer.
@@ -101,6 +101,9 @@ void HorizontalSliceRenderer::drawImage(QMatrix4x4 mvpMatrix) {
     texture.bind(textureUnit);
     shaderProgram.setUniformValue("colorMappingTexture", textureUnit);
 
+    // Set z-offset based on current z-layer
+    //float offset = currentz / 16;
+    shaderProgram.setUniformValue("zoffset", currentz);
 
     // Issue OpenGL draw commands.
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();

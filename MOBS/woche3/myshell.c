@@ -66,7 +66,7 @@ int main(void) {
 			int status;
 			if(wait(&status) == pid && WIFEXITED(status))
 			printf ("\nExit Status: %d\n", WEXITSTATUS(status));
-			clearInputBuffer();
+		clearInputBuffer();
 		}
 		else if (pid == 0) {
 			//Wenn 'no' eingegeben wurde, ohne Kommando ausfuehren
