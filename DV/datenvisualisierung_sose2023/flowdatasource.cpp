@@ -13,6 +13,8 @@ FlowDataSource::FlowDataSource(int xsize, int ysize, int zsize)
     createData(0);
 }
 
+FlowDataSource::FlowDataSource() {};
+
 void FlowDataSource::createData(int time)
 {
     gen_tornado(xs, ys, zs, time, cartesianDataGrid);
@@ -36,6 +38,14 @@ void FlowDataSource::printValuesOfHorizontalSlice(int z, int c)
             cout << getDataValue(z, y, x, c) << " ";
         }
     }
+}
+
+int * FlowDataSource::getDimensions() {
+    int dimArray[3];
+    dimArray[0] = xs;
+    dimArray[1] = ys;
+    dimArray[2] = zs;
+    return dimArray;
 }
 
 /*

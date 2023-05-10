@@ -2,13 +2,29 @@
 #define HORIZONTALSLICERENDERER_H
 #include "horizontalslicetoimagemapper.h"
 
+#include <QOpenGLShaderProgram>
+#include <QOpenGLBuffer>
+#include <QOpenGLVertexArrayObject>
+
 class HorizontalSliceRenderer
 {
 public:
     HorizontalSliceRenderer();
     void setMapper(HorizontalSliceToImageMapper* mapper);
-    void drawImage();
+    void drawImage(QMatrix4x4 mvpMatrix);
+    void moveSlice(int steps);
+    void changeWindComponent(int ic);
+
     HorizontalSliceToImageMapper mapper;
+
+private:
+    void initOpenGLShaders();
+    void initGeometry();
+
+    QOpenGLShaderProgram shaderProgram;
+    QOpenGLBuffer vertexBuffer;
+    QOpenGLVertexArrayObject vertexArrayObject;
+    int currentz, currentic;
 };
 
 #endif // HORIZONTALSLICERENDERER_H

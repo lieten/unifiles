@@ -43,6 +43,7 @@ HEADERS += \
 
 DISTFILES += \
     datavisualization_sose2023.pro.user \
+    gradiant.jpg \
     lines_fshader.glsl \
     lines_vshader.glsl \
     uhhlogo.png

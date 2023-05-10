@@ -8,10 +8,12 @@ class HorizontalSliceToImageMapper
 {
 public:
     HorizontalSliceToImageMapper();
-    void setDataSource(FlowDataSource* source);
-    QImage mapSliceToImage();
+    HorizontalSliceToImageMapper(FlowDataSource* src);
+    void setDataSource(FlowDataSource* src);
+    QImage mapSliceToImage(int z, int ic);
+
 private:
-    //FlowDataSource source;
+    FlowDataSource source;
 };
 
 #endif // HORIZONTALSLICETOIMAGEMAPPER_H

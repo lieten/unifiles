@@ -83,8 +83,8 @@ void OpenGLDisplayWidget::paintGL()
     f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Call renderer modules.
-    bboxRenderer->drawBoundingBox(mvpMatrix);
-    // ....
+    //bboxRenderer->drawBoundingBox(mvpMatrix);
+    sliceRenderer->drawImage(mvpMatrix);
 }
 
 
@@ -147,11 +147,23 @@ void OpenGLDisplayWidget::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Up)
     {
-        // Do stuff...
+        sliceRenderer->moveSlice(1);
     }
     else if (e->key() == Qt::Key_Down)
     {
-        // Do stuff...
+        sliceRenderer->moveSlice(-1);
+    }
+    else if (e->key() == Qt::Key_X) {
+        sliceRenderer->changeWindComponent(0);
+    }
+    else if (e->key() == Qt::Key_Y) {
+        sliceRenderer->changeWindComponent(1);
+    }
+    else if (e->key() == Qt::Key_Z) {
+        sliceRenderer->changeWindComponent(2);
+    }
+    else if (e->key() == Qt::Key_B) {
+        sliceRenderer->changeWindComponent(3);
     }
     else
     {
@@ -191,9 +203,11 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
     // Initialize mapper modules.
     // ....
     HorizontalSliceToImageMapper mapper;
+    mapper.setDataSource(&source);
 
     // Initialize rendering modules.
-    bboxRenderer = new DataVolumeBoundingBoxRenderer();
+    //bboxRenderer = new DataVolumeBoundingBoxRenderer();
     // ....
-    HorizontalSliceRenderer renderer;
+    sliceRenderer = new HorizontalSliceRenderer();
+    sliceRenderer->setMapper(&mapper);
 }
