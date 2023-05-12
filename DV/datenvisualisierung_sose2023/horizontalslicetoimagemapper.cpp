@@ -2,6 +2,9 @@
 #include "flowdatasource.h"
 #include <QImage>
 #include <iostream>
+#include <cmath>
+
+#define INTENSITYFACTOR 3
 
 HorizontalSliceToImageMapper::HorizontalSliceToImageMapper() {}
 
@@ -14,6 +17,10 @@ void HorizontalSliceToImageMapper::setDataSource(FlowDataSource* src)
     source = *src;
 }
 
+FlowDataSource* HorizontalSliceToImageMapper::getDataSource() {
+    return &source;
+}
+
 QImage HorizontalSliceToImageMapper::mapSliceToImage(int z, int ic) {
     QImage image("uhhlogo.png");
     /*
@@ -23,16 +30,25 @@ QImage HorizontalSliceToImageMapper::mapSliceToImage(int z, int ic) {
     int ys = *(dp+1);
     //int zs = *(dp+2);
     */
-    int xs = 16;
-    int ys = 16;
+    int xs = source.getXDimension(); //16
+    int ys = source.getYDimension(); //16
+    int zs = source.getZDimension(); //16
     QColor colour;
     image = QImage(xs, ys, QImage::Format_RGB16);
 
     float val;
     for(int y = 0; y < ys; y++) {
         for(int x = 0; x < xs; x++) {
-            val = source.getDataValue(z, y, x, ic);
-            int colourVal = abs(val * 255)*3;
+	    if(ic <= 3) {
+                float xcomp = source.getDataValue(z, y, x, 0);
+		float ycomp = source.getDataValue(z, y, x, 1);
+		float zcomp = source.getDataValue(z, y, x, 2);
+		val = cbrt(xcomp * ycomp * zcomp);
+	    }
+	    else {
+            	val = source.getDataValue(z, y, x, ic);
+	    }
+            int colourVal = abs(val * 255) * INTENSITYFACTOR;
             //coord = QPoint(x, y);
             if(val < 0) {
                 colour = QColor(0, 0, colourVal);

@@ -48,6 +48,18 @@ int * FlowDataSource::getDimensions() {
     return dimArray;
 }
 
+int FlowDataSource::getXDimension() {
+    return xs;
+}
+
+int FlowDataSource::getYDimension() {
+    return ys;
+}
+
+int FlowDataSource::getZDimension() {
+    return zs;
+}
+
 /*
  * xs, ys, zs: groesse des Gatters
  * time:Zeitpunkt im Tornado

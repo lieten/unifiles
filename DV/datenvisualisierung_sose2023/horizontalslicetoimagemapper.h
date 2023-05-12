@@ -10,6 +10,7 @@ public:
     HorizontalSliceToImageMapper();
     HorizontalSliceToImageMapper(FlowDataSource* src);
     void setDataSource(FlowDataSource* src);
+    FlowDataSource* getDataSource();
     QImage mapSliceToImage(int z, int ic);
 
 private:

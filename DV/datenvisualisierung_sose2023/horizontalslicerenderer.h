@@ -20,11 +20,12 @@ public:
 private:
     void initOpenGLShaders();
     void initGeometry();
+    void updateSourceData();
 
     QOpenGLShaderProgram shaderProgram;
     QOpenGLBuffer vertexBuffer;
     QOpenGLVertexArrayObject vertexArrayObject;
-    int currentz, currentic;
+    int currentz, zdimension, currentic;
 };
 
 #endif // HORIZONTALSLICERENDERER_H
