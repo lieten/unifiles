@@ -43,7 +43,7 @@ QImage HorizontalSliceToImageMapper::mapSliceToImage(int z, int ic) {
                 float xcomp = source.getDataValue(z, y, x, 0);
 		float ycomp = source.getDataValue(z, y, x, 1);
 		float zcomp = source.getDataValue(z, y, x, 2);
-		val = cbrt(xcomp * ycomp * zcomp);
+		val = sqrt(xcomp * xcomp + ycomp * ycomp + zcomp * zcomp);
 	    }
 	    else {
             	val = source.getDataValue(z, y, x, ic);
