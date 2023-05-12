@@ -19,10 +19,10 @@ void HorizontalSliceRenderer::setMapper(HorizontalSliceToImageMapper* mpr)
     mapper = *mpr;
 }
 
-void updateSourceData() {
+void HorizontalSliceRenderer::updateSourceData() {
     FlowDataSource* srcp = mapper.getDataSource();
     FlowDataSource src = *srcp;
-    zdimension = src.getZDimension()
+    zdimension = src.getZDimension();
 }
 
 void HorizontalSliceRenderer::moveSlice(int steps) {
@@ -110,7 +110,7 @@ void HorizontalSliceRenderer::drawImage(QMatrix4x4 mvpMatrix) {
 
     // Give current Z layer and Z dimensions. These are used to calculate visual offset.
     shaderProgram.setUniformValue("zlayer", currentz);
-    shaderProgram.serUniformValue("zdimension", zdimension);
+    shaderProgram.setUniformValue("zdimension", zdimension);
 
 
     // Issue OpenGL draw commands.

@@ -16,7 +16,6 @@ public:
     int getZDimension();
 
 private:
-    void gen_tornado(int xs, int ys, int zs, int time, float *tornado);
     float * cartesianDataGrid;
     int xs, ys, zs;
 };

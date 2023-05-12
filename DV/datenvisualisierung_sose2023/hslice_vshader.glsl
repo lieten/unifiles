@@ -11,7 +11,8 @@ void main()
 {
     // Calculate vertex position in screen space.
     vec4 offsetPos = vertexPosition.xyzw;
-    offsetPos.z += zlayer / zdimension;
+    float zoffset = zlayer / (zdimension - 1.0);
+    offsetPos.z += zoffset;
     gl_Position = mvpMatrix * offsetPos;
     texCoord = vertexPosition.xy;
 }
