@@ -46,7 +46,7 @@ QImage HorizontalSliceToImageMapper::mapSliceToImage(int z, int ic) {
                 float zcomp = source.getDataValue(z, y, x, 2);
                 val = sqrt(xcomp * xcomp + ycomp * ycomp + zcomp * zcomp);
             }
-            else { //Nimm die jeweilige Komponente
+            else { //Nimm die jeweilige Komponente (0-2)
                 val = source.getDataValue(z, y, x, ic);
             }
             int colourVal = abs(val * 255);
