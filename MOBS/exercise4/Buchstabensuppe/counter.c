@@ -5,25 +5,26 @@
 #include <pthread.h>
 #include <string.h>
 
+//Anzahl der Cores, bestimmt wie viele Threads verwendet werden
 #define NUMCORES 4
 
 int alphabet[26]; //nicht aendern!
+
+//Die gelesene Textdatei
 char *text;
-/*
-typedef struct params {
-	char **text;
-	int offset;
-} params;
-*/
-void readFile(const char* file_name/*, char **text*/) {
-	//Hier koennte Ihre Loesung stehen.
+
+//Array an Alphabeten, die die Threads benutzen
+int *localAlphabetArray[NUMCORES];
+//Laenge des gelesenen Textes
+int textLength;
+
+void readFile(const char* file_name) {
 	FILE *textfile;
-	//char *text;
 	long numbytes;
 	
 	textfile = fopen(file_name, "r");
 	if(textfile == NULL) {
-		printf("upps1");
+		printf("Error reading file");
 		return;
 	}
 	fseek(textfile, 0L, SEEK_END);
@@ -32,58 +33,57 @@ void readFile(const char* file_name/*, char **text*/) {
 	
 	text = (char*)calloc(numbytes, sizeof(char));
 	if(text == NULL) {
-		printf("upps2");
+		printf("Error reading file");
 		return; 
 	}
 
 	fread(text, sizeof(char), numbytes, textfile);
 	fclose(textfile);
-	
-	//printf(text);
-	//Bis hierhin wird die Datei eingelesen
 }
 
-void *function(void *a) {
-	/*
-	params *input = (params*) a;
-	char **textp = input->text;
-	char *text = *textp;
-	int offset = input->offset;
-	*/
-	int offset = *((int*) a);
-	long textLength;// = strlen(text);
-	printf("%d\n", offset);
+void *subcount(void *a) {
+    //Der Anfangsoffset
+    int offset = *(int*) a;
+    //Lokales Alphabet, auf dem die vom Thread gelesenen Buchstaben gezaehlt werden
+    int *localAlphabet = (int*)malloc(26*sizeof(int));
+
+    //Jeder Thread springt abhaengig von der Threadanzahl ueber den Text
 	for(int i = offset; i < textLength; i += NUMCORES) {
-		printf("%c", text[i]);
+        //Durch Ascii-Wert Platz im Array berechnen, siehe Ascii-Tabelle
+        int asciiValue = text[i] - 65;
+        if(asciiValue > 25) {
+            asciiValue -= 32;
+        }
+        if(asciiValue <= 25 && asciiValue >= 0) {
+            localAlphabet[asciiValue]++;
+        }
 	}
-	printf("\n");
+    //Lokales Alphabet in globale Liste der lokalen Alphabete aufnehmen
+    localAlphabetArray[offset] = localAlphabet;
 	free(a);
 }
 
-void startThread(int offset/*, char **text*/) {
-	pthread_t tid;
-	/*
-	params *args = malloc(sizeof(params));
-	args->offset = offset;
-	args->text = text;
-	*/
-	int *param = malloc(sizeof(int));
-	*param = offset;
-	int success = pthread_create(&tid, NULL, &function, (void*) param);
-	printf("Success: %d\n", success);
-}
-
 void count(const char* file_name) {
-	//char *text;
-	//readFile(file_name, &text);
-	printf("%d\n", strlen(text));
 	readFile(file_name);
-	//printf(text);
-	//startThread(0, &text);
-	startThread(0);
-}
+    pthread_t tidArray[NUMCORES];
+    textLength = strlen(text);
 
-int main() {
-	count("input.txt");
-	return 0;
+	for(int i = 0; i < NUMCORES; i++) {
+        int *param = malloc(sizeof(int));
+        *param = i;
+        //Thread mit Offset starten
+        pthread_create(&tidArray[i], NULL, &subcount, (void*) param);
+    }
+
+    //Warten, bis alle Threads ferting sind
+    for(int i = 0; i < NUMCORES; i++) {
+        pthread_join(tidArray[i], NULL);
+    }
+
+    //Ergebnisse aus lokalen Alphabeten zusammentragen
+    for(int i = 0; i < NUMCORES; i++) {
+        for(int j = 0; j < 26; j++) {
+            alphabet[j] += localAlphabetArray[i][j];
+        }
+    }
 }

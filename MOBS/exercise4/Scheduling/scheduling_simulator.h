@@ -38,6 +38,7 @@ typedef struct process {
 	int cpu;
 	int io;
 	int vrr_remaining;
+    int time_active;
 } process;
 
 typedef struct priority_list {
@@ -71,5 +72,6 @@ process* create_process(parameters);
 void set_arriving_ready();
 void cleanup_memory();
 void print_status(int);
+void print_cpu_utilization();
 
 #endif /* SCHEDULING_SIMULATOR_H_ */
