@@ -56,7 +56,7 @@ void initialize_scheduler() {
 }
 
 void initiate_all_processes() {
-	FILE *ptr = fopen("scenario4.txt", "r");
+	FILE *ptr = fopen("scenario.txt", "r");
 	int a, b, c;
 #define LINE_LEN 64
 	char line_buffer[LINE_LEN];
