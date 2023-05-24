@@ -39,6 +39,8 @@ int main(int argc, char *argv[]) {
 		proceed();
 	}
 
+    print_cpu_utilization();
+
 	cleanup_memory();
 	return EXIT_SUCCESS;
 }
@@ -177,6 +179,9 @@ void perform_scheduling() {
 	if (running_process->status == STATUS_BLOCKED || running_process->status == STATUS_READY || running_process->status == STATUS_NOT_ARRIVED) {
 		select_next_process();
 	}
+    if(running_process != NULL) {
+        running_process->time_active++;
+    }
 }
 
 void proceed_with_task(process *running_process) {
@@ -283,4 +288,19 @@ void print_status(int time) {
 				running_process->cpu, running_process->io);
 	}
 	fflush(stdout);
+}
+
+void print_cpu_utilization() {
+    process *process;
+    float percentage_cpu_time;
+    float total_percentage_time;
+    for(int i = 0; i < MAX_NUMBER_OF_PROCESSES; i++) {
+        process = all_processes[i];
+        if(process != NULL) {
+            percentage_cpu_time = (float) process->time_active / TIME_LIMIT;
+            total_percentage_time += percentage_cpu_time;
+            printf("Percentage CPU time of process %d: %f\n", i, percentage_cpu_time*100);
+        }
+    }
+    printf("CPU idle time: %f\n", (1-total_percentage_time)*100);
 }
