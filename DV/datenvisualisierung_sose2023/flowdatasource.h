@@ -11,9 +11,11 @@ public:
     float getDataValue(int iz, int iy, int ix, int ic);
     void printValuesOfHorizontalSlice(int z, int c);
     int * getDimensions();
+    int getXDimension();
+    int getYDimension();
+    int getZDimension();
 
 private:
-    void gen_tornado(int xs, int ys, int zs, int time, float *tornado);
     float * cartesianDataGrid;
     int xs, ys, zs;
 };

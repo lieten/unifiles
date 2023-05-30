@@ -39,7 +39,8 @@ HEADERS += \
     horizontalslicetoimagemapper.h \
     mainwindow.h \
     opengldisplaywidget.h \
-    datavolumeboundingboxrenderer.h
+    datavolumeboundingboxrenderer.h \
+    tornadoSrc.h
 
 DISTFILES += \
     datavisualization_sose2023.pro.user \

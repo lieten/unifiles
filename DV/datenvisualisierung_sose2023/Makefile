@@ -302,7 +302,8 @@ DIST          = datavisualization_sose2023.pro.user \
 		horizontalslicetoimagemapper.h \
 		mainwindow.h \
 		opengldisplaywidget.h \
-		datavolumeboundingboxrenderer.h flowdatasource.cpp \
+		datavolumeboundingboxrenderer.h \
+		tornadoSrc.h flowdatasource.cpp \
 		horizontalslicerenderer.cpp \
 		horizontalslicetoimagemapper.cpp \
 		main.cpp \
@@ -777,7 +778,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents flowdatasource.h horizontalslicerenderer.h horizontalslicetoimagemapper.h mainwindow.h opengldisplaywidget.h datavolumeboundingboxrenderer.h $(DISTDIR)/
+	$(COPY_FILE) --parents flowdatasource.h horizontalslicerenderer.h horizontalslicetoimagemapper.h mainwindow.h opengldisplaywidget.h datavolumeboundingboxrenderer.h tornadoSrc.h $(DISTDIR)/
 	$(COPY_FILE) --parents flowdatasource.cpp horizontalslicerenderer.cpp horizontalslicetoimagemapper.cpp main.cpp mainwindow.cpp opengldisplaywidget.cpp datavolumeboundingboxrenderer.cpp tornadoSrc.c $(DISTDIR)/
 
 
@@ -843,7 +844,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-flowdatasource.o: flowdatasource.cpp flowdatasource.h
+flowdatasource.o: flowdatasource.cpp flowdatasource.h \
+		tornadoSrc.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o flowdatasource.o flowdatasource.cpp
 
 horizontalslicerenderer.o: horizontalslicerenderer.cpp horizontalslicerenderer.h \
@@ -876,7 +878,7 @@ opengldisplaywidget.o: opengldisplaywidget.cpp opengldisplaywidget.h \
 datavolumeboundingboxrenderer.o: datavolumeboundingboxrenderer.cpp datavolumeboundingboxrenderer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datavolumeboundingboxrenderer.o datavolumeboundingboxrenderer.cpp
 
-tornadoSrc.o: tornadoSrc.c 
+tornadoSrc.o: tornadoSrc.c tornadoSrc.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o tornadoSrc.o tornadoSrc.c
 
 moc_mainwindow.o: moc_mainwindow.cpp 

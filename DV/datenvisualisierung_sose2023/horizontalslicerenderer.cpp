@@ -19,10 +19,17 @@ void HorizontalSliceRenderer::setMapper(HorizontalSliceToImageMapper* mpr)
     mapper = *mpr;
 }
 
+void HorizontalSliceRenderer::updateSourceData() {
+    FlowDataSource* srcp = mapper.getDataSource();
+    FlowDataSource src = *srcp;
+    zdimension = src.getZDimension();
+}
+
 void HorizontalSliceRenderer::moveSlice(int steps) {
-    currentz = (currentz+steps) % 16;
+    updateSourceData();
+    currentz = (currentz+steps) % zdimension;
     if(currentz < 0) {
-        currentz = 16 + currentz;
+        currentz = zdimension + currentz;
     }
 }
 
@@ -101,9 +108,10 @@ void HorizontalSliceRenderer::drawImage(QMatrix4x4 mvpMatrix) {
     texture.bind(textureUnit);
     shaderProgram.setUniformValue("colorMappingTexture", textureUnit);
 
-    // Set z-offset based on current z-layer
-    //float offset = currentz / 16;
-    shaderProgram.setUniformValue("zoffset", currentz);
+    // Give current Z layer and Z dimensions. These are used to calculate visual offset.
+    shaderProgram.setUniformValue("zlayer", currentz);
+    shaderProgram.setUniformValue("zdimension", zdimension);
+
 
     // Issue OpenGL draw commands.
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
