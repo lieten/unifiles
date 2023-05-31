@@ -7,6 +7,8 @@
 #include "flowdatasource.h"
 #include "horizontalslicetoimagemapper.h"
 #include "horizontalslicerenderer.h"
+#include "horizontalslicetocontourlinemapper.h"
+#include "horizontalcontourlinesrenderer.h"
 
 
 OpenGLDisplayWidget::OpenGLDisplayWidget(QWidget *parent)
@@ -85,6 +87,7 @@ void OpenGLDisplayWidget::paintGL()
     // Call renderer modules.
     bboxRenderer->drawBoundingBox(mvpMatrix);
     sliceRenderer->drawImage(mvpMatrix);
+    clineRenderer->drawContourLines(mvpMatrix);
 }
 
 
@@ -148,22 +151,28 @@ void OpenGLDisplayWidget::keyPressEvent(QKeyEvent *e)
     if (e->key() == Qt::Key_Up)
     {
         sliceRenderer->moveSlice(1);
+        clineRenderer->moveSlice(1);
     }
     else if (e->key() == Qt::Key_Down)
     {
         sliceRenderer->moveSlice(-1);
+        clineRenderer->moveSlice(-1);
     }
     else if (e->key() == Qt::Key_X) {
         sliceRenderer->changeWindComponent(0);
+        clineRenderer->changeWindComponent(0);
     }
     else if (e->key() == Qt::Key_Y) {
         sliceRenderer->changeWindComponent(1);
+        clineRenderer->changeWindComponent(1);
     }
     else if (e->key() == Qt::Key_Z) {
         sliceRenderer->changeWindComponent(2);
+        clineRenderer->changeWindComponent(2);
     }
     else if (e->key() == Qt::Key_B) {
         sliceRenderer->changeWindComponent(3);
+        clineRenderer->changeWindComponent(3);
     }
     else
     {
@@ -201,13 +210,20 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
     FlowDataSource source (16, 16, 16);
 
     // Initialize mapper modules.
-    // ....
-    HorizontalSliceToImageMapper mapper;
-    mapper.setDataSource(&source);
+    // ImageMapper
+    HorizontalSliceToImageMapper imagemapper;
+    imagemapper.setDataSource(&source);
+    // Contour Line Mapper
+    HorizontalSliceToContourLineMapper clinemapper;
+    clinemapper.setDataSource(&source);
 
     // Initialize rendering modules.
+    // Bounding box
     bboxRenderer = new DataVolumeBoundingBoxRenderer();
-    // ....
+    // Image Renderer
     sliceRenderer = new HorizontalSliceRenderer();
-    sliceRenderer->setMapper(&mapper);
+    sliceRenderer->setMapper(&imagemapper);
+    // Contour Line Renderer
+    clineRenderer = new HorizontalContourLinesRenderer();
+    clineRenderer->setMapper(&clinemapper);
 }

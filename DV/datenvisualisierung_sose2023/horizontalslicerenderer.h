@@ -10,7 +10,7 @@ class HorizontalSliceRenderer
 {
 public:
     HorizontalSliceRenderer();
-    void setMapper(HorizontalSliceToImageMapper* mapper);
+    void setMapper(HorizontalSliceToImageMapper* mpr);
     void drawImage(QMatrix4x4 mvpMatrix);
     void moveSlice(int steps);
     void changeWindComponent(int ic);

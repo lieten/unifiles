@@ -4,7 +4,7 @@
 #include <QOpenGLWidget>
 #include "datavolumeboundingboxrenderer.h"
 #include "horizontalslicerenderer.h"
-
+#include "horizontalcontourlinesrenderer.h"
 
 class OpenGLDisplayWidget : public QOpenGLWidget
 {
@@ -49,6 +49,7 @@ private:
 
     DataVolumeBoundingBoxRenderer *bboxRenderer;
     HorizontalSliceRenderer *sliceRenderer;
+    HorizontalContourLinesRenderer *clineRenderer;
     // ....
 
     // Initialize the pipeline (create instances of data source, mapping,

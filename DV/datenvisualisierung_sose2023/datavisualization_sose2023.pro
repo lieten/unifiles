@@ -25,7 +25,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     flowdatasource.cpp \
+    horizontalcontourlinesrenderer.cpp \
     horizontalslicerenderer.cpp \
+    horizontalslicetocontourlinemapper.cpp \
     horizontalslicetoimagemapper.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -35,14 +37,19 @@ SOURCES += \
 
 HEADERS += \
     flowdatasource.h \
+    horizontalcontourlinesrenderer.h \
     horizontalslicerenderer.h \
+    horizontalslicetocontourlinemapper.h \
     horizontalslicetoimagemapper.h \
     mainwindow.h \
     opengldisplaywidget.h \
     datavolumeboundingboxrenderer.h \
+    tornadoSrc.h \
     tornadoSrc.h
 
 DISTFILES += \
+    contourlines_fshader.glsl \
+    contourlines_vshader.glsl \
     datavisualization_sose2023.pro.user \
     gradiant.jpg \
     hslice_fshader.glsl \
