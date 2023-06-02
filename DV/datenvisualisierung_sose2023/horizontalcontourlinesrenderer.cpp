@@ -40,7 +40,7 @@ void HorizontalContourLinesRenderer::changeWindComponent(int ic) {
 }
 void HorizontalContourLinesRenderer::initOpenGLShaders(){
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                               "contourlines_vshader.glsl"))
+                                               "lines_vshader.glsl"))
     {
         std::cout << "Vertex shader error:\n"
                   << shaderProgram.log().toStdString() << "\n" << std::flush;
@@ -48,7 +48,7 @@ void HorizontalContourLinesRenderer::initOpenGLShaders(){
     }
 
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                               "contourlines_fshader.glsl"))
+                                               "lines_fshader.glsl"))
     {
         std::cout << "Fragment shader error:\n"
                   << shaderProgram.log().toStdString() << "\n" << std::flush;
@@ -85,6 +85,9 @@ void HorizontalContourLinesRenderer::initGeometry() {
 void HorizontalContourLinesRenderer::drawContourLines(QMatrix4x4 mvpMatrix) {
     // Tell OpenGL to use the shader program of this class.
     shaderProgram.bind();
+
+    // Probably update Geometry
+    // initGeometry()
 
     // Bind the vertex array object that links to the bounding box vertices.
     vertexArrayObject.bind();
