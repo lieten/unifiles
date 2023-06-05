@@ -27,6 +27,7 @@ element* dequeue(list *list) {
 	printf("1\n");
 	if(prevHead != NULL) {
 		list->head = prevHead->next;
+		prevHead->next = NULL;
 	}
 	printf("2\n");
 	return prevHead;
