@@ -24,12 +24,10 @@ void enqueue_front(list *list, element* elem) {
 
 element* dequeue(list *list) {
 	element *prevHead = list->head;
-	printf("1\n");
 	if(prevHead != NULL) {
 		list->head = prevHead->next;
 		prevHead->next = NULL;
 	}
-	printf("2\n");
 	return prevHead;
 }
 
@@ -38,31 +36,23 @@ void delete_elements(list *list, int value) {
 	element *previousElement = NULL;
 	while(currentElement != NULL) {
 		int elemVal = currentElement->payload;
-		printf("%d", elemVal);
 		if(elemVal == value) {
-			printf(" match");
 			if(previousElement == NULL) {
-				printf(" at head");
 				list->head = currentElement->next;
 				currentElement->next = NULL;
 				free(currentElement);
 				currentElement = list->head;
-				printf(" deleted\n");
 			}
-			else{
-				printf(" not at head");
+			else {
 				previousElement->next = currentElement->next;
 				currentElement->next = NULL;
 				free(currentElement);
 				currentElement = previousElement->next;
-				printf(" deleted\n");
 			}
 		}
 		else {
-			printf(" no match");
 			previousElement = currentElement;
 			currentElement = currentElement->next;
-			printf(", continue\n");
 		}
 	}
 }
