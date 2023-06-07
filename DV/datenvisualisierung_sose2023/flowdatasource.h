@@ -10,7 +10,6 @@ public:
     void createData(int time);
     float getDataValue(int iz, int iy, int ix, int ic);
     void printValuesOfHorizontalSlice(int z, int c);
-    int * getDimensions();
     int getXDimension();
     int getYDimension();
     int getZDimension();

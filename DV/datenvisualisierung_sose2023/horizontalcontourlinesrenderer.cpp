@@ -40,7 +40,7 @@ void HorizontalContourLinesRenderer::changeWindComponent(int ic) {
 }
 void HorizontalContourLinesRenderer::initOpenGLShaders(){
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                               "lines_vshader.glsl"))
+                                               "contourlines_vshader.glsl"))
     {
         std::cout << "Vertex shader error:\n"
                   << shaderProgram.log().toStdString() << "\n" << std::flush;
@@ -48,7 +48,7 @@ void HorizontalContourLinesRenderer::initOpenGLShaders(){
     }
 
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                               "lines_fshader.glsl"))
+                                               "contourlines_fshader.glsl"))
     {
         std::cout << "Fragment shader error:\n"
                   << shaderProgram.log().toStdString() << "\n" << std::flush;
@@ -67,6 +67,12 @@ void HorizontalContourLinesRenderer::initGeometry() {
     //TODO: implement
     QVector<QVector3D> vertexVector = mapper.mapSliceToContourLineSegment(currentz, currentic, 0.0);
     QVector3D* vertexVectorData = vertexVector.data();
+    float *vertexArray[vertexVector.length()];
+    for(int i = 0; i < vertexVector.length(); i++) {
+        float a[3] = {vertexVectorData[i].x(), vertexVectorData[i].y(), vertexVectorData[i].z()};
+        vertexArray[i] = a;
+    }
+    currentarraysize = vertexVector.length();
     vertexBuffer.create();
     vertexBuffer.bind();
     vertexBuffer.allocate(vertexVectorData, vertexVector.length()*3*sizeof(float));
@@ -87,7 +93,7 @@ void HorizontalContourLinesRenderer::drawContourLines(QMatrix4x4 mvpMatrix) {
     shaderProgram.bind();
 
     // Probably update Geometry
-    // initGeometry()
+    initGeometry();
 
     // Bind the vertex array object that links to the bounding box vertices.
     vertexArrayObject.bind();
@@ -98,7 +104,7 @@ void HorizontalContourLinesRenderer::drawContourLines(QMatrix4x4 mvpMatrix) {
     // Issue OpenGL draw commands.
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glLineWidth(2);
-    f->glDrawArrays(GL_LINE_STRIP, 0, 16);
+    f->glDrawArrays(GL_LINES, 0, currentarraysize);
 
     // Release objects until next render cycle.
     vertexArrayObject.release();

@@ -26,7 +26,7 @@ private:
     QOpenGLShaderProgram shaderProgram;
     QOpenGLBuffer vertexBuffer;
     QOpenGLVertexArrayObject vertexArrayObject;
-    int currentz, zdimension, currentic;
+    int currentz, zdimension, currentic, currentarraysize;
 };
 
 #endif // HORIZONTALCONTOURLINESRENDERER_H

@@ -44,14 +44,6 @@ void FlowDataSource::printValuesOfHorizontalSlice(int z, int c)
     }
 }
 
-int * FlowDataSource::getDimensions() {
-    int dimArray[3];
-    dimArray[0] = xs;
-    dimArray[1] = ys;
-    dimArray[2] = zs;
-    return dimArray;
-}
-
 int FlowDataSource::getXDimension() {
     return xs;
 }

@@ -18,5 +18,7 @@ private:
 };
 
 float calculateAlpha(float v0, float v1, float iso);
+int checkIfInRange(float measure, float iso, float range);
+int invert(int x);
 
 #endif // HORIZONTALSLICETOCONTOURLINEMAPPER_H
