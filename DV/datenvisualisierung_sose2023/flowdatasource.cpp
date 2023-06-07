@@ -1,6 +1,7 @@
 #include "flowdatasource.h"
 #include <math.h>
 #include <iostream>
+
 extern "C" {
     #include "tornadoSrc.h"
 }
@@ -15,6 +16,7 @@ FlowDataSource::FlowDataSource(int xsize, int ysize, int zsize)
     int size = xs * ys * zs * 3;
     cartesianDataGrid = new (nothrow) float[size];
     createData(0);
+    currenttime = 0;
 }
 
 FlowDataSource::FlowDataSource() {};
@@ -26,6 +28,12 @@ void FlowDataSource::createData(int time)
 
 float FlowDataSource::getDataValue(int iz, int iy, int ix, int ic)
 {
+    if(ic == 3) {
+        float x = getDataValue(iz, iy, ix, 0);
+        float y = getDataValue(iz, iy, ix, 1);
+        float z = getDataValue(iz, iy, ix, 2);
+        return sqrt(x * x + y * y + z * z);
+    }
     return cartesianDataGrid[3*xs*ys*iz + 3*xs*iy + 3*ix + ic]; //springe zum richtigen z-block, dann y-block, dann x-block, dann Vektorkomponente
 }
 

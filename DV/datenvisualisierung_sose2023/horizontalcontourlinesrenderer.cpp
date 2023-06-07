@@ -35,9 +35,11 @@ void HorizontalContourLinesRenderer::moveSlice(int steps) {
         currentz = zdimension + currentz;
     }
 }
+
 void HorizontalContourLinesRenderer::changeWindComponent(int ic) {
     currentic = ic;
 }
+
 void HorizontalContourLinesRenderer::initOpenGLShaders(){
     if (!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
                                                "contourlines_vshader.glsl"))
@@ -67,13 +69,33 @@ void HorizontalContourLinesRenderer::initGeometry() {
     //TODO: implement
     QVector<QVector3D> vertexVector = mapper.mapSliceToContourLineSegment(currentz, currentic, 0.0);
     QVector3D* vertexVectorData = vertexVector.data();
+    /*
     float *vertexArray[vertexVector.length()];
     for(int i = 0; i < vertexVector.length(); i++) {
         float a[3] = {vertexVectorData[i].x(), vertexVectorData[i].y(), vertexVectorData[i].z()};
         vertexArray[i] = a;
     }
+    */
     currentarraysize = vertexVector.length();
     vertexBuffer.create();
+    vertexBuffer.bind();
+    vertexBuffer.allocate(vertexVectorData, vertexVector.length()*3*sizeof(float));
+    vertexBuffer.release();
+
+    QOpenGLVertexArrayObject::Binder vaoBinder(&vertexArrayObject);
+    if (vertexArrayObject.isCreated())
+    {
+        vertexBuffer.bind();
+        shaderProgram.setAttributeBuffer("vertexPosition", GL_FLOAT, 0, 3, 3*sizeof(float));
+        shaderProgram.enableAttributeArray("vertexPosition");
+        vertexBuffer.release();
+    }
+}
+
+void HorizontalContourLinesRenderer::updateGeometry() {
+    QVector<QVector3D> vertexVector = mapper.mapSliceToContourLineSegment(currentz, currentic, 0.0);
+    QVector3D* vertexVectorData = vertexVector.data();
+    currentarraysize = vertexVector.length();
     vertexBuffer.bind();
     vertexBuffer.allocate(vertexVectorData, vertexVector.length()*3*sizeof(float));
     vertexBuffer.release();
@@ -93,7 +115,7 @@ void HorizontalContourLinesRenderer::drawContourLines(QMatrix4x4 mvpMatrix) {
     shaderProgram.bind();
 
     // Probably update Geometry
-    initGeometry();
+    updateGeometry();
 
     // Bind the vertex array object that links to the bounding box vertices.
     vertexArrayObject.bind();

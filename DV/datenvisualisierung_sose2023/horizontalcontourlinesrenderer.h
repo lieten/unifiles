@@ -22,6 +22,7 @@ private:
     void initOpenGLShaders();
     void initGeometry();
     void updateSourceData();
+    void updateGeometry();
 
     QOpenGLShaderProgram shaderProgram;
     QOpenGLBuffer vertexBuffer;

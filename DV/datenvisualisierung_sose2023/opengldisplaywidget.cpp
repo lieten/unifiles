@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
 #include <iostream>
+#include <QTimer>
 #include "math.h"
 #include "flowdatasource.h"
 #include "horizontalslicetoimagemapper.h"
@@ -200,6 +201,11 @@ void OpenGLDisplayWidget::updateMVPMatrix()
     mvpMatrix = projectionMatrix * mvMatrix;
 }
 
+void OpenGLDisplayWidget::timeHandler() {
+    //TODO: this talks to renderer, renderer talks to mapper, mapper updates source
+    sourcep->createData(++timePassed);
+    std::cout <<timePassed << "test\n";
+}
 
 void OpenGLDisplayWidget::initVisualizationPipeline()
 {
@@ -207,7 +213,8 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
 
     // Initialize data source(s).
     // ....
-    FlowDataSource source (16, 16, 16);
+    FlowDataSource source (32, 32, 32);
+    sourcep = &source;
 
     // Initialize mapper modules.
     // ImageMapper
@@ -226,4 +233,8 @@ void OpenGLDisplayWidget::initVisualizationPipeline()
     // Contour Line Renderer
     clineRenderer = new HorizontalContourLinesRenderer();
     clineRenderer->setMapper(&clinemapper);
+    // QTimer
+     QTimer *timer = new QTimer(this);
+     connect(timer, &QTimer::timeout, this, &OpenGLDisplayWidget::timeHandler);
+     timer->start(1000);
 }

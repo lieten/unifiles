@@ -16,7 +16,7 @@ public:
 
 private:
     float * cartesianDataGrid;
-    int xs, ys, zs;
+    int xs, ys, zs, currenttime;
 };
 
 #endif // FLOWDATASOURCE_H

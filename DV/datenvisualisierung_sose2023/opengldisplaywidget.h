@@ -39,6 +39,9 @@ private:
     QVector2D rotationAngles;
     float distanceToCamera;
 
+    FlowDataSource *sourcep;
+    int timePassed;
+
     // Recompute the mode-view-projection matrix from current rotation angles,
     // distance to camera, viewport geometry.
     void updateMVPMatrix();
@@ -55,6 +58,7 @@ private:
     // Initialize the pipeline (create instances of data source, mapping,
     // rendering etc. modules and connect them).
     void initVisualizationPipeline();
+    void timeHandler();
 };
 
 #endif // OPENGLDISPLAYWIDGET_H

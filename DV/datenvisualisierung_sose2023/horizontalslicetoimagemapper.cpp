@@ -54,8 +54,11 @@ QImage HorizontalSliceToImageMapper::mapSliceToImage(int z, int ic) {
             if(val < 0) {
                 colour = QColor(0, 0, colourVal);
             }
-            else {
+            else if(val > 0) {
                 colour = QColor(colourVal, 0, 0);
+            }
+            else {
+                colour = QColor(0, 0, 0);
             }
 
             //colour = QColor(100, 100, 100);
